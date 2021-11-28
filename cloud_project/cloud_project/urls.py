@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from worker.views import workers_json
+from counter.views import increase_counter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('workers/', workers_json)
+    path('workers/', workers_json),
+    path('counter/', increase_counter)
 ]

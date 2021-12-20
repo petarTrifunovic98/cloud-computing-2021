@@ -11,3 +11,7 @@ RUN poetry lock
 RUN poetry install
 
 COPY ./cloud_project ./cloud_project
+COPY run_server.sh ./
+RUN chmod +x run_server.sh
+# CMD poetry run python ./cloud_project/manage.py runserver 0.0.0.0:8000
+CMD ./run_server.sh

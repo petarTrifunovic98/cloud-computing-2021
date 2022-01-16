@@ -60,6 +60,17 @@ services:
     depends_on:
       - database2
 
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - "../nginx/:/etc/nginx/"
+    depends_on:
+      - web1
+      - web2
+
 volumes:
   cloud_proj_database1:
   cloud_proj_database2:

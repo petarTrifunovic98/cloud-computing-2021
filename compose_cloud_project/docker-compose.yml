@@ -30,7 +30,8 @@ services:
 
   web1:
     restart: "on-failure:5"
-    build: ..
+    #build: ..
+    image: petartrifunovic98/cloud-project-django-web-app
     container_name: django_app1
     ports:
       - "8000:8000"
@@ -46,7 +47,8 @@ services:
 
   web2:
     restart: "on-failure:5"
-    build: ..
+    #build: ..
+    image: petartrifunovic98/cloud-project-django-web-app
     container_name: django_app2
     ports:
       - "8001:8000"

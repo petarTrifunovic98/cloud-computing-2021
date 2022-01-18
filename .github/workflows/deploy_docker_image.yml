@@ -1,9 +1,10 @@
 name: build and push docker image
 
 on:
-
   push:
-    branches: checkpoint4
+    branches:
+      - checkpoint4
+      - master
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

@@ -1,2 +1,2 @@
 cd ./compose_cloud_project
-docker-compose up
+docker-compose up --build

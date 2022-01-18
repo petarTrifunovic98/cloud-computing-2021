@@ -64,11 +64,11 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx:alpine
+    build: ../nginx
     ports:
       - "8080:80"
-    volumes:
-      - "../nginx/:/etc/nginx/"
+    # volumes:
+    #   - "../nginx/:/etc/nginx/"
     depends_on:
       - web1
       - web2

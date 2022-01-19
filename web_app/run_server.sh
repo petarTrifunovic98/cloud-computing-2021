@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cat pyproject.toml
 cd ./cloud_project
 poetry run python manage.py makemigrations
 poetry run python manage.py migrate

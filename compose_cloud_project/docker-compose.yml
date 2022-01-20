@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-  database:
+  database1:
     image: postgres
     environment:
       - POSTGRES_DB=cloud_project
@@ -10,14 +10,29 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=petar
     expose:
-      - "5342"
+      - "5432"
     volumes:
-      - cloud_proj_database:/var/lib/postgresql/data
+      - cloud_proj_database1:/var/lib/postgresql/data
 
-  web:
+  database2:
+    image: postgres
+    environment:
+      - POSTGRES_DB=cloud_project
+      - POSTGRES_NAME=cloud_project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=petar
+    ports:
+      - "5433:5432"
+    expose:
+      - "5433"
+    volumes:
+      - cloud_proj_database2:/var/lib/postgresql/data
+
+  web1:
     restart: "on-failure:5"
-    build: ..
-    container_name: django_app
+    #build: ..
+    image: petartrifunovic98/cloud-project-django-web-app
+    container_name: django_app1
     ports:
       - "8000:8000"
     environment:
@@ -25,10 +40,39 @@ services:
       - DB_NAME=cloud_project
       - DB_USER=postgres
       - DB_PASS=petar
-      - DB_HOST=database
+      - DB_HOST=database1
       - DB_PORT=5432
     depends_on:
-      - database
+      - database1
+
+  web2:
+    restart: "on-failure:5"
+    #build: ..
+    image: petartrifunovic98/cloud-project-django-web-app
+    container_name: django_app2
+    ports:
+      - "8001:8000"
+    environment:
+      - DJANGO_SECRET_KEY=#django-insecure-8rd#hy-4_=3t+!7&9$$0u$$(-e&hq8orxn5o%ft^l$$gtu2x)vqye
+      - DB_NAME=cloud_project
+      - DB_USER=postgres
+      - DB_PASS=petar
+      - DB_HOST=database2
+      - DB_PORT=5432
+    depends_on:
+      - database2
+
+  nginx:
+    container_name: nginx
+    build: ../nginx
+    ports:
+      - "8080:80"
+    # volumes:
+    #   - "../nginx/:/etc/nginx/"
+    depends_on:
+      - web1
+      - web2
 
 volumes:
-  cloud_proj_database:
+  cloud_proj_database1:
+  cloud_proj_database2:
